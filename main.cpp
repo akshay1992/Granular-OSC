@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 
 #include "portaudio.h"
 
@@ -29,12 +30,27 @@ int callback( const void *input,
   float *in = (float *) input;
   float *out = (float *) output;
   paUserData *ud = (paUserData*) userData;
+  setGrain(ud->grain);
 
-//  setGrain(ud->grain);
+  float RMS_L, RMS_R;
   for(int i=0; i<frameCount; i+=ud->nchannels)
   {
-      out[i] = out[i+1] =  grain_process(ud->grain.data);
+      float sampsL, sampsR;
+
+      out[i] = sampsL =
+      out[i+1] = sampsR = grain_process(ud->grain.data);
+
+      RMS_L += sampsL*sampsL;
+      RMS_R += sampsR*sampsR;
   }
+
+  RMS_L/=frameCount;
+  RMS_R/=frameCount;
+
+  RMS_L = sqrt(RMS_L);
+  RMS_R = sqrt(RMS_R);
+
+  cout << RMS_L << " " <<RMS_R << endl;
 
   return paContinue;
 }
@@ -82,3 +98,4 @@ int main()
 
     return 0;
 }
+
