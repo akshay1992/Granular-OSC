@@ -1,5 +1,19 @@
+#ifndef PA_WRAPPER
+#define PA_WRAPPER
+
 #include "grain_wrapper.h"
 #include "paUtils.h"
+
+//#define DEVICE_SELECTOR
+//#define PRINT_DEVICE_INFO
+
+typedef struct
+{
+    int nchannels;	// Total number of channels
+    Grain grain;
+} paUserData;
+
+paUserData data;
 
 int main_device_index;
 
@@ -73,3 +87,4 @@ void startPa(
 
 
 
+#endif

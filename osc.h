@@ -3,7 +3,11 @@
 
 #include "lo/lo.h"
 #include <stdio.h>
+
+#include "pa_wrapper.h"
 using namespace std;
+
+extern paUserData data;
 
 int done = 0;
 
@@ -23,9 +27,22 @@ int quit_handler(const char *path, const char *types, lo_arg ** argv,
     return 0;
 }
 
-void handle(int i)
+void handle(int i, float x, float y)
 {
-    cout << "Handling" << i << endl;
+//    cout << "Handling" << i << ": " << "(" << x << ", " << y << ")"<< endl;
+    switch(i)
+    {
+    case 1:
+//        cout << "1" << endl;
+        data.grain.amp = (1-y);
+        break;
+    case 2:
+//        cout << "2" << endl;
+        data.grain.y = y;
+        data.grain.x = x;
+        break;
+    default:;
+    }
 
 }
 
@@ -33,42 +50,33 @@ void handle(int i)
 int multi1_handler(const char *path, const char *types, lo_arg ** argv,
                 int argc, void *data, void *user_data)
 {
-    printf("Multi 1: (%f, %f) \n", argv[0]->f, argv[1]->f);
-    handle(1);
-    fflush(stdout);
+//    cout << "Handle 1" << endl;
+    handle(1, argv[0]->f, argv[1]->f);
     return 0;
 }
 
 int multi2_handler(const char *path, const char *types, lo_arg ** argv,
                 int argc, void *data, void *user_data)
 {
-    printf("Multi 2: (%f, %f) \n", argv[0]->f, argv[1]->f);
-    fflush(stdout);
-    handle(2);
+    handle(2, argv[0]->f, argv[1]->f);
     return 0;
 }
 int multi3_handler(const char *path, const char *types, lo_arg ** argv,
                 int argc, void *data, void *user_data)
 {
-    printf("Multi 3: (%f, %f) \n", argv[0]->f, argv[1]->f);
-    fflush(stdout);
-    handle(3);
+    handle(3, argv[0]->f, argv[1]->f);
     return 0;
 }
 int multi4_handler(const char *path, const char *types, lo_arg ** argv,
                 int argc, void *data, void *user_data)
 {
-    printf("Multi 4: (%f, %f) \n", argv[0]->f, argv[1]->f);
-    fflush(stdout);
-    handle(4);
+    handle(4, argv[0]->f, argv[1]->f);
     return 0;
 }
 int multi5_handler(const char *path, const char *types, lo_arg ** argv,
                 int argc, void *data, void *user_data)
 {
-    printf("Multi 5: (%f, %f) \n", argv[0]->f, argv[1]->f);
-    fflush(stdout);
-    handle(5);
+    handle(5, argv[0]->f, argv[1]->f);
     return 0;
 }
 

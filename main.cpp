@@ -3,20 +3,11 @@
 #include "portaudio.h"
 
 #include "osc.h"
-
 #include "pa_wrapper.h"
-
-//#define DEVICE_SELECTOR
-//#define PRINT_DEVICE_INFO
 
 using namespace std;
 
-
-typedef struct
-{
-    int nchannels;	// Total number of channels
-    Grain grain;
-} paUserData;
+extern paUserData data;
 
 // Port Audio Callback
 int callback( const void *input,
@@ -29,11 +20,15 @@ int callback( const void *input,
   float *in = (float *) input;
   float *out = (float *) output;
   paUserData *ud = (paUserData*) userData;
+  grain_set_param(ud->grain.data, GRAIN_AMP, ud->grain.amp);
 
 //  setGrain(ud->grain);
+
   for(int i=0; i<frameCount; i+=ud->nchannels)
   {
-      out[i] = out[i+1] =  grain_process(ud->grain.data);
+      float samp = grain_process(ud->grain.data);
+      out[i] = samp;
+      out[i+1] =  samp;
   }
 
   return paContinue;

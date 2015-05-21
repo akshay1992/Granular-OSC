@@ -12,6 +12,10 @@ typedef struct
     std::atomic<int> rate;
     std::atomic<int> max_grains;
     std::atomic<int> grain_size;
+
+    // For Panning
+    std::atomic<float> x;
+    std::atomic<float> y;
 } Grain;
 
 void initGrain(Grain &g)
