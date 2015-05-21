@@ -33,11 +33,11 @@ void handle(int i, float x, float y)
     switch(i)
     {
     case 1:
-//        cout << "1" << endl;
+        cout << "1" << endl;
         data.grain.amp = (1-y);
         break;
     case 2:
-//        cout << "2" << endl;
+        cout << "2" << endl;
         data.grain.y = y;
         data.grain.x = x;
         break;

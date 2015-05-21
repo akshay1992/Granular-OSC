@@ -9,6 +9,7 @@ using namespace std;
 
 extern paUserData data;
 
+
 // Port Audio Callback
 int callback( const void *input,
                 void *output,
@@ -22,13 +23,12 @@ int callback( const void *input,
   paUserData *ud = (paUserData*) userData;
   grain_set_param(ud->grain.data, GRAIN_AMP, ud->grain.amp);
 
-//  setGrain(ud->grain);
-
+  setGrain(ud->grain);
   for(int i=0; i<frameCount; i+=ud->nchannels)
   {
       float samp = grain_process(ud->grain.data);
-      out[i] = samp;
-      out[i+1] =  samp;
+      out[i] = ud->grain.x * samp;
+      out[i+1] = (1-ud->grain.x) * samp;
   }
 
   return paContinue;
@@ -38,7 +38,6 @@ int main()
 {
     int nchannels = initPa();
 
-    paUserData data;
     data.nchannels = nchannels;
     initGrain(data.grain);
 
