@@ -6,16 +6,21 @@
 
 typedef struct
 {
-    void * data = grain_construct(44100, 5);
+    void * data;
     std::atomic<float> amp;
     std::atomic<float> int_freq;
     std::atomic<int> rate;
     std::atomic<int> max_grains;
     std::atomic<int> grain_size;
+
+    // For Panning
+    std::atomic<float> x;
+    std::atomic<float> y;
 } Grain;
 
 void initGrain(Grain &g)
 {
+    g.data = grain_construct(44100, 5);
     g.amp = 0.2;
     g.int_freq = 7;
     g.rate= 220;
