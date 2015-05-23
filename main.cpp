@@ -5,9 +5,11 @@
 #include "osc.h"
 #include "pa_wrapper.h"
 
+#define OSC_TEST
+
 using namespace std;
 
-extern paUserData data;
+paUserData data;
 
 // Port Audio Callback
 int callback( const void *input,
@@ -24,9 +26,10 @@ int callback( const void *input,
   setGrain(ud->grain);
   for(int i=0; i<frameCount; i+=ud->nchannels)
   {
+//      cout << ud->grain.x << endl;
       float samp = grain_process(ud->grain.data);
-      out[i] = ud->grain.x * samp ;
-      out[i+1] = (1-ud->grain.x) * samp ;
+      out[i] = samp ;
+      out[i+1] = samp ;
   }
 
   return paContinue;

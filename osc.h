@@ -33,12 +33,18 @@ void handle(int i, float x, float y)
     switch(i)
     {
     case 1:
-        data.grain.rate = (1-y) *220 ;
+        data.grain.rate = (1-y) *150 ;
         break;
     case 2:
         data.grain.y = y;
         data.grain.x = x;
         break;
+    case 3:
+        data.grain.grain_size = (1-y) * 30 ;
+    case 4:
+        data.grain.int_freq = (1-y) * 14 + 2;
+    case 5:
+        data.grain.max_grains = rand()/RAND_MAX * 20 + 5;
     default:;
     }
 
@@ -48,7 +54,6 @@ void handle(int i, float x, float y)
 int multi1_handler(const char *path, const char *types, lo_arg ** argv,
                 int argc, void *data, void *user_data)
 {
-//    cout << "Handle 1" << endl;
     handle(1, argv[0]->f, argv[1]->f);
     return 0;
 }

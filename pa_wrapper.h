@@ -3,6 +3,7 @@
 
 #include "grain_wrapper.h"
 #include "paUtils.h"
+#include <iostream>
 
 //#define DEVICE_SELECTOR
 //#define PRINT_DEVICE_INFO
@@ -12,8 +13,6 @@ typedef struct
     int nchannels;	// Total number of channels
     Grain grain;
 } paUserData;
-
-paUserData data;
 
 int main_device_index;
 
@@ -36,7 +35,7 @@ int initPa(void)
     }
     fflush(stdout);
 
-    cout << "Please select device: ";
+    std::cout << "Please select device: ";
     scanf("%d", &deviceIndex);
     #endif
 
