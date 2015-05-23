@@ -11,6 +11,7 @@
 typedef struct
 {
     int nchannels;	// Total number of channels
+    int sampleRate;
     Grain grain;
 } paUserData;
 
@@ -76,6 +77,8 @@ void startPa(
     outparams.sampleFormat = paInt32;
     outparams.suggestedLatency = info.defaultLowOutputLatency;
     outparams.hostApiSpecificStreamInfo = NULL;
+
+    ((paUserData *) data)->sampleRate = sr;
 
     PaError err = Pa_OpenStream(&stream, &inparams, &outparams, sr, bufferSize, paNoFlag, callback, data);
     if (err != paNoError) PaErrorHandler();
